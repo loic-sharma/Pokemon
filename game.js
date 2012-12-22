@@ -1,6 +1,7 @@
 window.onload = function()
 {
 	Game.init();
+	Game.setState('world');
 
 	for(i = 0; i < map.length; i++)
 	{
@@ -49,10 +50,10 @@ window.onload = function()
 		item.left += (item.left / 16);
 		item.top  += (item.top / 16) - 1;
 
-		Game.tiles[item.x+'-'+item.y] = item.id;
+		Game.state.tiles[item.x+'-'+item.y] = item.id;
 	}
 
-	Game.player = new Player;
+	Game.state.player = new Player;
 
 	Game.load();
 };
