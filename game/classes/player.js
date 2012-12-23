@@ -1,8 +1,11 @@
 var Player = Class.create(Item, {
 
 	character: 0,
-	state: 0,
+	direction: 0,
 	_step: 0,
+
+	width: 18,
+	height: 22,
 
 	initialize: function($super)
 	{
@@ -25,30 +28,90 @@ var Player = Class.create(Item, {
 
 	moveUp: function($super, speed)
 	{
+		var newPosition = {
+			"x":      this.x,
+			"y":      this.y - speed,
+			"width":  this.width,
+			"height": this.height,
+		};
+
+		for(var solid = 0; solid < Game.state().solids.length; solid++)
+		{
+			if(Game.state().solids[solid].hit(newPosition))
+			{	
+				return;
+			}
+		}
+
 		$super(speed);
 		
-		this.state = 2 + this.step();
+		this.direction = 2 + this.step();
 	},
 
 	moveDown: function($super, speed)
 	{
+		var newPosition = {
+			"x":      this.x,
+			"y":      this.y + speed,
+			"width":  this.width,
+			"height": this.height,
+		};
+
+		for(var solid = 0; solid < Game.state().solids.length; solid++)
+		{
+			if(Game.state().solids[solid].hit(newPosition))
+			{	
+				return;
+			}
+		}
+
 		$super(speed);
 
-		this.state = 0 + this.step();
+		this.direction = 0 + this.step();
 	},
 
 	moveLeft: function($super, speed)
 	{
+		var newPosition = {
+			"x":      this.x - speed,
+			"y":      this.y,
+			"width":  this.width,
+			"height": this.height,
+		};
+
+		for(var solid = 0; solid < Game.state().solids.length; solid++)
+		{
+			if(Game.state().solids[solid].hit(newPosition))
+			{	
+				return;
+			}
+		}
+
 		$super(speed);
 
-		this.state = 1 + this.step();
+		this.direction = 1 + this.step();
 	},
 
 	moveRight: function($super, speed)
 	{
+		var newPosition = {
+			"x":      this.x + speed,
+			"y":      this.y,
+			"width":  this.width,
+			"height": this.height,
+		};
+
+		for(var solid = 0; solid < Game.state().solids.length; solid++)
+		{
+			if(Game.state().solids[solid].hit(newPosition))
+			{	
+				return;
+			}
+		}
+
 		$super(speed);
 
-		this.state = 3 + this.step();
+		this.direction = 3 + this.step();
 	},
 
 	update: function()
@@ -77,7 +140,7 @@ var Player = Class.create(Item, {
 
 		if(Key.isDown(Key.SHIFT))
 		{
-			speed = 2;
+			speed *= 2;
 		}
 
 		if(Key.isDown(Key.UP)) 
@@ -105,21 +168,21 @@ var Player = Class.create(Item, {
 
 	getOutput: function()
 	{
-		while(this.state > 11)
+		while(this.direction > 11)
 		{
-			this.state -= 12;
+			this.direction -= 12;
 		}
 
-		var startX = -(this.character % 3) * 349/3;
-		var startY = -(Math.floor(this.character / 3)) * 798/9;
+		var startX = -(this.character % 3) * 360/3;
+		var startY = -(Math.floor(this.character / 3)) * 810/9;
 
-		startX -= (this.state % 4) * 349/12;
-		startY -= Math.floor(this.state / 4) * 798/27;
+		startX -= (this.direction % 4) * 349/12;
+		startY -= Math.floor(this.direction / 4) * 798/27;
 
 		var output = '';
 
 		output += '<img src="assets/transparent.gif" ';
-		output += 'style="width:28px; height:29px; background:url(assets/sprites/characters.png) ' + startX + ' ' + startY + ';';
+		output += 'style="width:' + this.width + 'px; height:' + this.height + 'px; background:url(assets/sprites/characters.png) ' + startX + ' ' + startY + ';';
 		output += 'position:fixed; left: ' + this.x + 'px; top:' + this.y + 'px;">';
 
 		return output;

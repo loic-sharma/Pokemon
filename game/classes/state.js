@@ -4,14 +4,15 @@ var State = Class.create({
 
 	name: null,
 
-	tiles: [],
+	tiles: {},
 	items: [],
+	solids: [],
 	player: null,
 
 	initialize: function(name)
 	{
 		this.name = name;
-		this.tiles = [];
+		this.tiles = {};
 		this.items = [];
 
 		Game.container.innerHTML += '<div id="state-' + name + '"></div>';

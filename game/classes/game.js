@@ -8,6 +8,20 @@ var Game = {
 	loaded: false,
 
 	/**
+	 * The game loop.
+	 *
+	 * @var object
+	 */
+	gameLoop: null,
+
+	/**
+	 * Is the game loop running?
+	 *
+	 * @var bool
+	 */
+	paused: false,
+
+	/**
 	 * The game's HTML container.
 	 *
 	 * @var object
@@ -68,8 +82,13 @@ var Game = {
 
 			this.resetContainers();
 
-			window.setInterval(this.loop);
+			this.gameLoop = window.setInterval(this.loop);
 		}
+	},
+
+	stop: function()
+	{
+		clearInterval(this.gameLoop);
 	},
 
 	/**
@@ -78,7 +97,7 @@ var Game = {
 	 * @param  string  state
 	 * @return State
 	 */
-	setCurrentState: function(state)
+	currentState: function(state)
 	{
 		// If a state's name was inputted, we need to change the current
 		// state. 
@@ -103,14 +122,14 @@ var Game = {
 		{
 			// Add the state to the game.
 			this.states[state] = new State(state);
-
-			this.resetContainers();
 		}
 
 		else
 		{
 			this.states[state].container.style.visibility = 'visible';
 		}
+
+		this.resetContainers();
 
 		return this.states[state];
 	},
@@ -148,6 +167,8 @@ var Game = {
 
 			for(var state in this.states)
 			{
+				console.log('Updating state: ' + state);
+
 				this.states[state].container = document.getElementById('state-' + state);
 
 				for(var item = 0; item < this.states[state].items.length; item++)
@@ -179,9 +200,12 @@ var Game = {
 	 */
 	loop: function()
 	{
-		for(i = 0; i < Game.state().items.length; i++)
+		if( ! Game.paused)
 		{
-			Game.state().items[i].update();
+			for(i = 0; i < Game.state().items.length; i++)
+			{
+				Game.state().items[i].update();
+			}
 		}
 	},
 };

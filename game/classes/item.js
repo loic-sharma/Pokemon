@@ -1,5 +1,7 @@
 var Item = Class.create({
 
+	state: null,
+
 	/**
 	 * The item's state id.
 	 *
@@ -43,13 +45,12 @@ var Item = Class.create({
 	 */
 	initialize: function(name)
 	{
+		this.state = Game.currentStateName;
+
 		this.id = Game.state().items.length;
 		this.name = name;
 
 		Game.addItem(this.id, this);
-
-		console.log('Registered: ' + name);
-		console.log(Game.state().items[this.id]);
 
 		this.show();
 	},
@@ -61,7 +62,22 @@ var Item = Class.create({
 	 */
 	resetContainer: function()
 	{
-		this.container = document.getElementById(this.name);
+		elements = document.getElementsByClassName('item-' + this.name);
+
+		for(var element = 0; element < elements.length; element++)
+		{
+			if(elements[element].parentNode.id == 'state-' + this.state)
+			{
+				this.container = elements[element];
+
+				return;
+			}
+
+			else
+			{
+				console.log(elements[element].parentNode);
+			}
+		}
 	},
 
 	/**
@@ -73,7 +89,7 @@ var Item = Class.create({
 	{
 		if( ! this.container)
 		{
-			Game.state().container.innerHTML += '<div id="'+this.name+'"></div>';
+			Game.state().container.innerHTML += '<div class="item-'+this.name+'"></div>';
 		}
 
 		else
@@ -118,18 +134,12 @@ var Item = Class.create({
 	 */
 	hit: function(item)
 	{
-		console.log(this);
-		console.log(item);
+		w = 0.5 * (this.width + item.width);
+		h = 0.5 * (this.height + item.height);
+		dx = (this.x + (this.width / 2)) - (item.x + (item.width / 2));
+		dy = (this.y + (this.height / 2)) - (item.y + (item.height / 2));
 
-		if(item.x >= this.x && item.x <= (this.x + this.width))
-		{
-			if(item.y >= this.y && item.y <= this.y + this.height)
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return (Math.abs(dx) < w && Math.abs(dy) < h);
 	},
 
 	/**
@@ -162,9 +172,9 @@ var Item = Class.create({
 
 		this.y += pixels;
 
-		if(this.y > 500)
+		if(this.y > 250)
 		{
-			this.y = 500;
+			this.y = 250;
 		}
 	},
 
