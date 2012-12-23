@@ -37,3 +37,8 @@ window.onload = function()
 
 	Game.load();
 };
+
+function updateCharacter()
+{
+	Game.state().player.character = $('character').value;
+}
