@@ -31,59 +31,6 @@ window.onload = function()
 				Game.state().solids[Game.state().solids.length] = item;
 			}
 		}
-		/*
-		if(typeof map[i].name !== 'undefined')
-		{
-			name = map[i].name;
-		}
-
-		else
-		{
-			name = i;
-		}
-
-		item = new Tile(name);
-
-		item.width  = 16;
-		item.height = 16;
-		item.top    = 0;
-		item.left   = 0;
-
-		if(typeof map[i].x !== 'undefined')
-		{
-			item.x = map[i].x * 16;
-		}
-
-		if(typeof map[i].y !== 'undefined')
-		{
-			item.y = map[i].y * 16;
-		}
-
-		if(typeof map[i].left !== 'undefined')
-		{
-			item.left = -16 * map[i].left;
-		}
-
-		if(typeof map[i].top !== 'undefined')
-		{
-			item.top = -16 * map[i].top;
-		}
-
-		item.top = 0;
-		item.left = -17;
-
-		if(typeof map[i].solid !== 'undefined' && map[i].solid == true)
-		{
-			item.solid = true;
-
-			Game.state().solids[Game.state().solids.length] = item;
-		}
-
-		else
-		{
-			item.solid = false;
-		}
-		*/
 	}
 
 	Game.state().player = new Player;
