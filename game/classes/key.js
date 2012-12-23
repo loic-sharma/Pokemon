@@ -57,6 +57,12 @@ var Key = {
 	RIGHTHARDBRACKET: 221,
 	APOSTROPHE: 222,
 
+	/**
+	 * Verify if a key is pressed down.
+	 *
+	 * @param  int   keyCode
+	 * @return bool
+	 */
 	isDown: function(keyCode)
 	{
 		delete this._released[keyCode];
@@ -64,11 +70,23 @@ var Key = {
 		return this._pressed[keyCode];
 	},
 
+	/**
+	 * Verify if a key was released.
+	 *
+	 * @param  int   keyCode
+	 * @return bool
+	 */
 	wasReleased: function(keyCode)
 	{
 		return this._released[keyCode];
 	},
 
+	/**
+	 * Register that a key was pressed.
+	 *
+	 * @param  int   keyCode
+	 * @return void
+	 */
 	onKeydown: function(event)
 	{
 		delete this._released[event.keyCode];
@@ -76,6 +94,12 @@ var Key = {
 		this._pressed[event.keyCode] = true;
 	},
 
+	/**
+	 * Register that a key was released.
+	 *
+	 * @param  int   keyCode
+	 * @return void
+	 */
 	onKeyup: function(event)
 	{
 		this._released[event.keyCode] = true;

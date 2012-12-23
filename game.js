@@ -3,6 +3,7 @@ window.onload = function()
 	Game.init();
 	Game.currentState('world');
 
+	// Inject all of the map's tiles to the game engine.
 	for(var y = 0; y < map.length; y++)
 	{
 		for(var x = 0; x < map[y].length; x++)
@@ -38,7 +39,18 @@ window.onload = function()
 	Game.load();
 };
 
-function updateCharacter()
+/**
+ * Change the character.
+ *
+ * @param  int   id
+ * @return void
+ */
+function updateCharacter(id)
 {
+	if(typeof id === 'undefined')
+	{
+		id = $('character').value;
+	}
+
 	Game.state().player.character = $('character').value;
 }

@@ -50,13 +50,6 @@ var Game = {
 	currentStateName: null,
 
 	/**
-	 * The current state object.
-	 *
-	 * @var State
-	 */
-	//state: null,
-
-	/**
 	 * Register the event listeners and prepare the game container.
 	 *
 	 * @return void
@@ -86,6 +79,11 @@ var Game = {
 		}
 	},
 
+	/**
+	 * Kill the game loop.
+	 *
+	 * @return void
+	 */
 	stop: function()
 	{
 		clearInterval(this.gameLoop);
@@ -134,6 +132,12 @@ var Game = {
 		return this.states[state];
 	},
 
+	/**
+	 * Retrieve a game state.
+	 *
+	 * @param  string  name
+	 * @return State
+	 */
 	state: function(name)
 	{
 		if(typeof name === 'undefined')

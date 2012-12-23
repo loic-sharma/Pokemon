@@ -1,17 +1,53 @@
 var Tile = Class.create(Item, {
 
+	/**
+	 * Can the player walk through this tile?
+	 *
+	 * @var bool
+	 */
 	solid: false,
+
+	/**
+	 * The tile's width in pixels.
+	 *
+	 * @var int
+	 */
 	width: 17,
+
+	/**
+	 * The tile's height in pixels.
+	 *
+	 * @var int
+	 */
 	height: 16,
+
+	/**
+	 * The tile's x position.
+	 *
+	 * @var int
+	 */
 	left: 0,
+
+	/**
+	 * The tile's y position.
+	 *
+	 * @var int
+	 */
 	top: 0,
+
+	/**
+	 * Has the tile already been displayed?
+	 *
+	 * @var bool
+	 */
 	displayed: false,
 
-	initialize: function($super, name)
-	{
-		$super(name);
-	},
-
+	/**
+	 * Get the tile's container.
+	 *
+	 * @param  function  $super
+	 * @return void
+	 */
 	resetContainer: function($super)
 	{
 		if( ! this.displayed)
@@ -20,6 +56,11 @@ var Tile = Class.create(Item, {
 		}
 	},
 
+	/**
+	 * Update the tile.
+	 *
+	 * @return void
+	 */
 	update: function()
 	{
 		if( ! this.displayed)
@@ -29,6 +70,11 @@ var Tile = Class.create(Item, {
 		}
 	},
 
+	/**
+	 * Get the tile's HTML.
+	 *
+	 * @return string
+	 */
 	getOutput: function()
 	{
 		var output = '';
