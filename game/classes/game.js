@@ -33,14 +33,14 @@ var Game = {
 	 *
 	 * @var string
 	 */
-	currentState: null,
+	currentStateName: null,
 
 	/**
 	 * The current state object.
 	 *
 	 * @var State
 	 */
-	state: null,
+	//state: null,
 
 	/**
 	 * Register the event listeners and prepare the game container.
@@ -78,24 +78,24 @@ var Game = {
 	 * @param  string  state
 	 * @return State
 	 */
-	setState: function(state)
+	setCurrentState: function(state)
 	{
 		// If a state's name was inputted, we need to change the current
 		// state. 
 		if(typeof state !== 'undefined')
 		{
 			// Hide the current state if it exists.
-			if(this.state)
+			if(this.currentStateName)
 			{
-				this.state.container.style.visibility = 'hidden';
+				this.state().container.style.visibility = 'hidden';
 			}
 
-			this.currentState = state;
+			this.currentStateName = state;
 		}
 
 		else
 		{
-			state = this.currentState;
+			state = this.currentStateName;
 		}
 
 		// If the state does not exist, we will need to create it.
@@ -103,17 +103,6 @@ var Game = {
 		{
 			// Add the state to the game.
 			this.states[state] = new State(state);
-
-			/*
-			this.container.innerHTML += '<div id="state-' + state + '"></div>';
-		
-			this.states[state] = {
-				"container": document.getElementById('state-' + state),
-				"tiles": [],
-				"items": [],
-				"player": null,
-			};
-			*/
 
 			this.resetContainers();
 		}
@@ -123,9 +112,26 @@ var Game = {
 			this.states[state].container.style.visibility = 'visible';
 		}
 
-		this.state = this.states[state];
+		return this.states[state];
+	},
 
-		return this.state;
+	state: function(name)
+	{
+		if(typeof name === 'undefined')
+		{
+			name = this.currentStateName;
+		}
+
+		if(typeof this.states[name] === 'undefined')
+		{
+			console.log('Creating new state.');
+
+			this.states[name] = new State(name);
+
+			this.resetContainers();
+		}
+
+		return this.states[name];
 	},
 
 	/**
@@ -161,7 +167,7 @@ var Game = {
 	 */
 	addItem: function(key, item)
 	{
-		this.state.items[key] = item;
+		this.state().items[key] = item;
 
 		this.resetContainers();
 	},
@@ -173,9 +179,9 @@ var Game = {
 	 */
 	loop: function()
 	{
-		for(i = 0; i < Game.state.items.length; i++)
+		for(i = 0; i < Game.state().items.length; i++)
 		{
-			Game.state.items[i].update();
+			Game.state().items[i].update();
 		}
 	},
 };

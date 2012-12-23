@@ -11,6 +11,8 @@ var State = Class.create({
 	initialize: function(name)
 	{
 		this.name = name;
+		this.tiles = [];
+		this.items = [];
 
 		Game.container.innerHTML += '<div id="state-' + name + '"></div>';
 

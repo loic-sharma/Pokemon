@@ -43,13 +43,13 @@ var Item = Class.create({
 	 */
 	initialize: function(name)
 	{
-		this.id = Game.state.items.length;
+		this.id = Game.state().items.length;
 		this.name = name;
 
 		Game.addItem(this.id, this);
 
 		console.log('Registered: ' + name);
-		console.log(Game.state.items[this.id]);
+		console.log(Game.state().items[this.id]);
 
 		this.show();
 	},
@@ -73,7 +73,7 @@ var Item = Class.create({
 	{
 		if( ! this.container)
 		{
-			Game.state.container.innerHTML += '<div id="'+this.name+'"></div>';
+			Game.state().container.innerHTML += '<div id="'+this.name+'"></div>';
 		}
 
 		else
